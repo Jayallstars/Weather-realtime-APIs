@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data</title>
+</head>
+
+<body>
+    <div class="col-md-3 text-secondary temparature">
+        <p></p>
+    </div>
+
+    <script>
+        let lat = 14.158813;
+        let lon = 101.34478;
+        let apiKey = "51c066067127e0f9136707c05295399a";
+        let apiKey2 = "wAGwzQNaoxTx3x3PpYex71AgOAm7q13x";
+
+        function displayData(data) {
+            let myData = document.querySelector('.temparature');
+            data.forEach(value => {
+                let myPara = document.querySelector('p');
+                myPara.innerHTML = `Temparature : ${value.main.temp}`;
+                myData.appendChild(myPara);
+            })
+        }
+
+
+        fetch("https://api.open-elevation.com/api/v1/lookup?locations=" + lat + "," + lon)
+            .then(response => response.json())
+            .then(data => displayData(data));
+        fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&units=metric")
+            .then(response => response.json())
+            .then(data => displayData(data));
+        fetch("http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=" + apiKey2 + "&q=" + lat + "," + lon)
+            .then(response => response.json())
+            .then(data => displayData(data));
+    </script>
+</body>
+
+</html>

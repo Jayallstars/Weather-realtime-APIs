@@ -31,9 +31,16 @@ app.post("/", function(req, res) {
             const textButton = "Back"
             const buttonOnclick = "window.location.href=";
             const linkButton = "/"
-            res.write("<p>The weather is currently " + description + "</p>");
-            res.write("<h1>The temperature in " + lat + " is " + temperature + " " + description + "</h1>");
-            res.write("<img src=" + imageUrl + ">");
+            res.write("<h1>The weather is currently " + description + "</h1>");
+            /* res.write("<h1>The temperature in " + lat + " is " + temperature + " " + description + "</h1>"); */
+            res.write("<h1>Temperature is " + temperature + " Celcius " + "</h1>");
+            res.write("<h1>Minimum temperature is " + temperature + " Celcius " + "</h1>");
+            res.write("<h1>Maximum temperature is " + temperature + " Celcius " + "</h1>");
+            res.write("<h1>Atmospheric pressure (hPa) is " + temperature + " Celcius " + "</h1>");
+            res.write("<h1>Humidity is " + temperature + " Celcius " + "</h1>");
+            res.write("<h1>Sea level " + description + "</h1>");
+            res.write("<h1>Gorund level " + description + "</h1>");
+            /* res.write("<img src=" + imageUrl + ">"); */
             res.write("<button><a href=" + linkButton + ">" + textButton + "</a></button>");
             res.send();
         });
