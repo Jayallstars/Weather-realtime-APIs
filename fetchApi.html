@@ -10,35 +10,68 @@
 
 <body>
     <div class="col-md-3 text-secondary temparature">
-        <p></p>
     </div>
-
+    <div class="col-md-3 text-secondary temparature">
+    </div>
+    <div class="col-md-3 text-secondary temparature">
+    </div>
+    <div class="col-md-3 text-secondary elevation">
+    </div>
+    <div class="col-md-3 text-secondary accuweather">
+    </div>
     <script>
         let lat = 14.158813;
         let lon = 101.34478;
         let apiKey = "51c066067127e0f9136707c05295399a";
         let apiKey2 = "wAGwzQNaoxTx3x3PpYex71AgOAm7q13x";
+        const temp = document.querySelector('.temparature');
+        const elevation = document.querySelector('.elevation');
+        const accuweather = document.querySelector('.accuweather');
 
-        function displayData(data) {
-            let myData = document.querySelector('.temparature');
-            data.forEach(value => {
-                let myPara = document.querySelector('p');
-                myPara.innerHTML = `Temparature : ${value.main.temp}`;
-                myData.appendChild(myPara);
-            })
-        }
-
-
+        /*         fetch("https://api.open-elevation.com/api/v1/lookup?locations=" + lat + "," + lon)
+                    .then(response => response.json())
+                    .then(data => console.log(data)); */
         fetch("https://api.open-elevation.com/api/v1/lookup?locations=" + lat + "," + lon)
-            .then(response => response.json())
-            .then(data => displayData(data));
+            .then((response) => {
+                return response.json();
+            })
+            .then((openElevation) => {
+                elevation.innerHTML = openElevation.results[0].elevation;
+            });
+
         fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&units=metric")
-            .then(response => response.json())
-            .then(data => displayData(data));
+            .then((response) => {
+                return response.json();
+            })
+            .then((openWeather) => {
+                temp.innerHTML = openWeather.main.temp;
+
+            });
+
         fetch("http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=" + apiKey2 + "&q=" + lat + "," + lon)
-            .then(response => response.json())
-            .then(data => displayData(data));
+            .then((response) => {
+                return response.json();
+            })
+            .then((accu) => {
+                accuweather.innerHTML = accu.AdministrativeArea.LocalizedName;
+            });
+
+        /*         fetch("http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=" + apiKey2 + "&q=" + lat + "," + lon)
+                    .then(response => response.json())
+                    .then(data => console.log(data)); */
+
+
+        /*         function showData(data) {
+            let myData = document.querySelector('#temparature');
+            data.forEach(element => {
+                let myPara = document.querySelector('p');
+                myPara.innerHTML = `Temparature : ${element.main.temp}`;
+                myData.appendChild(myPara);
+            });
+        } */
     </script>
 </body>
+
+
 
 </html>
